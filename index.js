@@ -132,6 +132,7 @@ Queue.prototype.extract = function(key, val) {
         while (currentNode && !isFound) {
             var previousNode = currentNode.prev;
             var nextNode = currentNode.next;
+            
             if (currentNode.value[key] === val) {
                 var data = currentNode.value;
                 isFound = true;
