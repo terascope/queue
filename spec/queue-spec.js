@@ -9,6 +9,7 @@ describe('Queue', function() {
         expect(typeof queue.dequeue).toBe('function');
         expect(typeof queue.size).toBe('function');
         expect(typeof queue.remove).toBe('function');
+        expect(typeof queue.extract).toBe('function');
     });
 
     it('can enqueue and dequeue', function() {
@@ -35,6 +36,7 @@ describe('Queue', function() {
         expect(queue.dequeue()).toEqual(2);
         expect(queue.dequeue()).toEqual(3);
         expect(queue.dequeue()).toEqual(null);
+        expect(queue.size()).toEqual(0);
     });
 
     it('has an each method', function() {
@@ -69,6 +71,7 @@ describe('Queue', function() {
         expect(queue.size()).toEqual(2);
         expect(queue.dequeue()).toEqual({data: 'first', id: 'id1'});
         expect(queue.dequeue()).toEqual({data: 'third', id: 'id3'});
+        expect(queue.size()).toEqual(0);
     });
 
     it('can remove from queue based on a key and id', function() {
@@ -84,9 +87,11 @@ describe('Queue', function() {
 
         expect(len).toEqual(4);
         expect(queue.size()).toEqual(3);
+        expect(queue.extract('job_id', 'id2')).toEqual(null)
         expect(queue.dequeue()).toEqual({data: 'first', id: 'id1'});
         expect(queue.dequeue()).toEqual({data: 'second', id: 'id2'});
         expect(queue.dequeue()).toEqual({data: 'third', ex_id: 'id3'});
+        expect(queue.size()).toEqual(0);
     });
 
     it('can extract from queue based on a key and id', function() {
