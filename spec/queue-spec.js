@@ -98,6 +98,7 @@ describe('Queue', function() {
         queue2.enqueue({job_id: 2});
         expect(queue2.size()).toEqual(1);
         expect(queue2.extract('job_id', 2)).toEqual({job_id: 2});
+        expect(queue2.extract('job_id', 2)).toEqual(null);
         expect(queue2.size()).toEqual(0);
         expect(queue2.dequeue()).toEqual(null);
 
@@ -106,6 +107,7 @@ describe('Queue', function() {
         queue3.enqueue({ex_id: 3});
         expect(queue3.size()).toEqual(2);
         expect(queue3.extract('ex_id', 3)).toEqual({ex_id: 3});
+        expect(queue3.extract('ex_id', 3)).toEqual(null);
         expect(queue3.size()).toEqual(1);
         expect(queue3.dequeue()).toEqual({job_id: 2});
         expect(queue3.dequeue()).toEqual(null);
@@ -128,5 +130,14 @@ describe('Queue', function() {
         expect(queue4.dequeue()).toEqual({data: 'fourth', job_id: 'id2'});
 
     });
-});
 
+    it('can extract only once from a queue', function() {
+        var queue = new Queue();
+        queue.enqueue({ job_id: 1 });
+        queue.enqueue({ job_id: 2 });
+        expect(queue.size()).toEqual(2);
+        expect(queue.extract('job_id', 1)).toEqual({ job_id: 1 });
+        expect(queue.size()).toEqual(1);
+        expect(queue.extract('job_id', 1)).toEqual(null);
+    });
+});
