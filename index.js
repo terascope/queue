@@ -1,5 +1,7 @@
 'use strict';
 
+/* eslint-disable func-names */
+
 function Node(data, prev, next) {
     this.next = next;
     if (next) {
@@ -40,19 +42,21 @@ Queue.prototype.dequeue = function () {
     if (this._size === 0) {
         return null;
     }
-    const head = this.head;
-    this.head = head.next;
-    if (head.next) {
-        head.next = this.head.prev = null;
+    const node = this.head;
+    this.head = node.next;
+    if (node.next) {
+        node.next = null;
+        this.head.prev = null;
     }
     this._size -= 1;
     if (this._size === 1) {
         this.tail = this.head;
     } else if (this._size === 0) {
-        this.head = this.tail = null;
+        this.head = null;
+        this.tail = null;
     }
 
-    return head.value;
+    return node.value;
 };
 
 Queue.prototype.each = function (fn) {
@@ -69,7 +73,7 @@ Queue.prototype.each = function (fn) {
 Queue.prototype.remove = function (id, keyForID) {
     const key = keyForID || 'id';
     if (this.head === null || !id) {
-        return null;
+        return;
     }
 
     // fast forward head to right spot
@@ -145,7 +149,8 @@ Queue.prototype.extract = function (key, val) {
                 if (this._size === 1) {
                     this.tail = this.head;
                 } else if (this._size === 0) {
-                    this.head = this.tail = null;
+                    this.head = null;
+                    this.tail = null;
                 }
                 return data;
             }
