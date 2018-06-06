@@ -23,7 +23,7 @@ Queue.prototype.enqueue = function (value) {
     if (!this.head) {
         this.head = this.tail;
     }
-    this._size++;
+    this._size += 1;
 };
 
 Queue.prototype.unshift = function (value) {
@@ -33,7 +33,7 @@ Queue.prototype.unshift = function (value) {
     if (this.tail === null) {
         this.tail = node;
     }
-    this._size++;
+    this._size += 1;
 };
 
 Queue.prototype.dequeue = function () {
@@ -45,7 +45,7 @@ Queue.prototype.dequeue = function () {
     if (head.next) {
         head.next = this.head.prev = null;
     }
-    this._size--;
+    this._size -= 1;
     if (this._size === 1) {
         this.tail = this.head;
     } else if (this._size === 0) {
@@ -108,7 +108,7 @@ Queue.prototype.remove = function (id, keyForID) {
                     previousNode.next = null;
                     this.tail = previousNode;
                 }
-                this._size--;
+                this._size -= 1;
                 currentNode = nextNode;
             } else {
                 currentNode = nextNode;
@@ -141,7 +141,7 @@ Queue.prototype.extract = function (key, val) {
                     previousNode.next = null;
                     this.tail = previousNode;
                 }
-                this._size--;
+                this._size -= 1;
                 if (this._size === 1) {
                     this.tail = this.head;
                 } else if (this._size === 0) {
